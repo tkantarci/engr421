@@ -48,12 +48,6 @@ means, covariances, priors = initialize_parameters(X, K)
 # EM clustering algorithm
 def em_clustering_algorithm(X, K, means, covariances, priors):
     # your implementation starts below
-    def memberships(X, means):
-        memberships = np.empty(X[:, 0].size)
-        D = dt.cdist(means, X)
-        memberships = np.argmin(D, axis=0)
-        return memberships
-    
     def update_H(X, H, means, covariances, K):
         N = X[:, 0].size
         for i in range(N):
@@ -103,7 +97,7 @@ def em_clustering_algorithm(X, K, means, covariances, priors):
     for i in range(iter_count):
         means, covariances, priors, H = iteration(means, covariances, priors, H, X, K)
 
-    assignments = memberships(X, means)
+    assignments = np.argmax(H, axis=1)
     # your implementation ends above
     return(means, covariances, priors, assignments)
 
